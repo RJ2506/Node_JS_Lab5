@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const username = "RJ";
-const password = "P@ssw0rd";
-const blog_name = "RJ_Blog";
+const username = "Clinton";
+const password = "P@ssw0rd123";
+const blog_name = "CW_Blog";
 
 const title = "super mario";
 const content = `
@@ -125,13 +125,13 @@ const createPost = (postTitle, postContent, blogName) => {
         fsreadDir(blogName)
             .then((data) => {
                 const title = `${postTitle.replace(" ", "_")}`;
-                if (data.includes(`${title}${Math.random(1, 100)}.txt`)) {
-                    resolve(fsWritefileP(title, postContent));
+                if (data.includes(`${title}.txt`)) {
+                    resolve(fsWritefileP(`${Math.floor(Math.random()*100000)}.txt`, postContent));
                 } else {
-                    resolve();
+                    resolve(fsWritefileP(`${title}.txt`, postContent));
                 }
             })
-            .catch((err) => reject(new Error("Blog name doesn't exists")));
+            .catch(() => reject(new Error("Blog name doesn't exists")));
     });
 };
 
