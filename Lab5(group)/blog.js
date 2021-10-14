@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-let user_account = `username: RJ password: RJ25`;
+let user_account = "username: RJ password: P@ssw0rd ";
 let blog_name = "RJ_Blog";
 
 let title = "super mario";
@@ -9,8 +9,10 @@ let content = `
 like: 1
 like by: you
 
-jump mario jump save the princess
-sup bowser
+Omae wa mou
+Shindeiru
+Nani!!!!!!!
+
 `;
 let folder_path = path.join(__dirname, blog_name);
 let post_folder = path.join(__dirname, "RJ_Blog");
@@ -29,7 +31,7 @@ const fsReadfileP = (file) => {
     });
 };
 
-const fsAppendUserP = (file, user, data) => {
+const register = (file, user, data) => {
     return new Promise((resolve, reject) => {
         if (data.includes(user)) {
             reject(new Error("User already exist \nPlease enter a new user name"));
@@ -103,10 +105,19 @@ const createPost = (postTitle, postContent, blogName) => {
 };
 
 // likePost(blogName, postTitle, username)
+const likePost = (blogName, postTitle, username) => {
+    return new Promise((resolve, rejext) => {
+        fs.readFile(FILE_NAME, (err, data) => {
+            if (err) {
+                rejext(err);
+            } else {}
+        });
+    });
+};
 
 fsReadfileP(FILE_NAME)
     .then((data) => {
-        fsAppendUserP(FILE_NAME, user_account, data);
+        register(FILE_NAME, user_account, data);
         console.log("Account registered");
     })
     .then(() => {
@@ -116,5 +127,8 @@ fsReadfileP(FILE_NAME)
     .then(() => {
         createPost(title, content, post_folder);
         console.log("Post created");
+    })
+    .then(() => {
+        likePost("RJ_Blog", "super_mario.txt", "RJ");
     })
     .catch((err) => console.log(err.message));
