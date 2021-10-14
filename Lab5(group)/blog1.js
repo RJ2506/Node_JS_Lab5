@@ -15,8 +15,8 @@ Shindeiru
 Nani!!!!!!!
 
 `;
-const folder_path = path.join(__dirname, blog_name);
-const post_folder = path.join(__dirname, "RJ_Blog");
+const FOLDER_PATH = path.join(__dirname, blog_name);
+const BLOG_PATH = path.join(__dirname, "RJ_Blog");
 const FILE_NAME = "database.txt";
 
 //create a function for fs.readFile
@@ -71,6 +71,19 @@ const fsmkdir = (blog) => {
     });
 };
 
+//read the directory if the file exists
+const fsreadDir = (directory) => {
+    return new Promise((resolve, reject) => {
+        fs.readdir(directory, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+};
+
 //check if the username already exists
 const checkData = (data, username) => {
     return new Promise((resolve, reject) => {
@@ -93,15 +106,32 @@ const register = (file, data, user_name, password) => {
                     fsAppendfileP(file, `username: ${user_name} password: ${password}\n`)
                 );
             })
-            .catch(() => reject(new Error("User already exists")));
+            .catch((err) => reject(new Error("User already exists")));
     });
 };
 
+// create Blog
 const createABlog = (blogName) => {
     return new Promise((resolve, reject) => {
         fsmkdir(blogName)
             .then(() => resolve())
-            .catch(() => reject(new Error("Blog already exists")));
+            .catch((err) => reject(new Error("Blog already exists")));
+    });
+};
+
+// createPost(postTitle, postContent, blogName)
+const createPost = (postTitle, postContent, blogName) => {
+    return new Promise((resolve, reject) => {
+        fsreadDir(blogName)
+            .then((data) => {
+                const title = `${postTitle.replace(" ", "_")}`;
+                if (data.includes(`${title}${Math.random(1, 100)}.txt`)) {
+                    resolve(fsWritefileP(title, postContent));
+                } else {
+                    resolve();
+                }
+            })
+            .catch((err) => reject(new Error("Blog name doesn't exists")));
     });
 };
 
@@ -113,5 +143,9 @@ fsReadfileP(FILE_NAME)
     .then(() => {
         createABlog(blog_name);
         console.log("Blog has been created");
+    })
+    .then(() => {
+        createPost(title, content, BLOG_PATH);
+        console.log("Post have been created");
     })
     .catch((err) => console.log(err.message));
