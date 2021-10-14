@@ -76,8 +76,8 @@ const checkData = (data, username) => {
     return new Promise((resolve, reject) => {
         const user = data.filter((account) => account.includes(username));
         const string_user = user.join(" ");
-        if (string_user === "") {
-            reject();
+        if (string_user !== "") {
+            reject(err);
         } else {
             resolve();
         }
@@ -107,7 +107,7 @@ const createABlog = (blogName) => {
 
 fsReadfileP(FILE_NAME)
     .then((data) => {
-        register(FILE_NAME, data, username, password);
+        register(FILE_NAME, data, username, password).then(() => {});
         console.log("Account has been registered");
     })
     .then(() => {
