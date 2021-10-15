@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const username = "Clinton";
+const username = "kim";
 const password = "P@ssw0rd123";
-const blog_name = "CW_Blog";
+const blog_name = "kim_Blog";
 
 const title = "super mario";
 const content = `
@@ -97,6 +97,9 @@ const checkData = (data, username) => {
     });
 };
 
+//check if the user is
+const checkUser
+
 //check the file if the account doesn't exists
 const register = (file, data, user_name, password) => {
     return new Promise((resolve, reject) => {
@@ -126,14 +129,31 @@ const createPost = (postTitle, postContent, blogName) => {
             .then((data) => {
                 const title = `${postTitle.replace(" ", "_")}`;
                 if (data.includes(`${title}.txt`)) {
-                    resolve(fsWritefileP(`${Math.floor(Math.random()*100000)}.txt`, postContent));
+                    resolve(
+                        fsWritefileP(
+                            `${path.join(blogName, title)}${Math.floor(
+                Math.random() * 100000
+              )}.txt`,
+                            postContent
+                        )
+                    );
                 } else {
-                    resolve(fsWritefileP(`${title}.txt`, postContent));
+                    resolve(
+                        fsWritefileP(`${path.join(blogName, title)}.txt`, postContent)
+                    );
                 }
             })
             .catch(() => reject(new Error("Blog name doesn't exists")));
     });
 };
+
+//inumerate the number of likes and append the user
+const likePost = (blogName, postTitle, username) => {
+    return new Promise((resolve, rejext) => {
+
+    })
+}
+
 
 fsReadfileP(FILE_NAME)
     .then((data) => {
@@ -141,11 +161,14 @@ fsReadfileP(FILE_NAME)
         console.log("Account has been registered");
     })
     .then(() => {
-        createABlog(blog_name);
+        createABlog(FOLDER_PATH);
         console.log("Blog has been created");
     })
     .then(() => {
         createPost(title, content, BLOG_PATH);
         console.log("Post have been created");
+    })
+    .then(() => {
+        likePost()
     })
     .catch((err) => console.log(err.message));

@@ -1,1 +1,4 @@
 username: RJ password: P@ssw0rd
+username: Clinton password: P@ssw0rd123
+username: James password: P@ssw0rd123
+username: kim password: P@ssw0rd123
