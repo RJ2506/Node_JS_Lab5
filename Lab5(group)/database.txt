@@ -1,7 +1,1 @@
-username: RJ password: P@ssw0rd
-username: Clinton password: P@ssw0rd123
-username: James password: P@ssw0rd123
-username: kim password: P@ssw0rd123
-username: Sam password: P@ssw0rd123
-
-username: Sammy password: P@ssw0rd123
+username: RJ password: P@ssw0rd123

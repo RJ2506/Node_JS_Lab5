@@ -3,14 +3,10 @@ const path = require("path");
 
 const username = "RJs";
 const password = "P@ssw0rd123";
-const blog_name = "RJ_Blog";
-const like_user = "RJ"
+const blog_name = "sss";
+const like_user = "RJs"
 
 const title = "Kenshiro meme";
-let like_counter = {
-  lk: 1,
-  lb: "you",
-};
 const content = "Omai wa mou Shindeiru ..... Nani??!!!!";
 
 const FOLDER_PATH = path.join(__dirname, blog_name);
@@ -158,9 +154,14 @@ const createPost = (postTitle, postContent, blogName) => {
   });
 };
 //update the content
-const updatePost = (postTitle, post, postContent, username) => {
+const updatePost = (postTitle, postContent, username) => {
   return new Promise((resolve, reject) => {
-    const post_contents = `likes: ${post["lk"] += 1}\nliked by: ${post["lb"] = `${post["lb"]}, ${username}`}\n\n${postContent}`;
+    let post = {
+        lk: 0,
+        lb: "",
+      };
+      
+    const post_contents = `likes: ${post["lk"] += 1}\nliked by: ${post["lb"] = `${username}, ${post["lb"]}`}\n\n${postContent}`;
     fsWritefileP(path.join(BLOG_PATH, `${postTitle.replace(" ", "_")}.txt`), post_contents)
       .then(() => resolve())
       .catch(() => reject(err))
@@ -168,11 +169,11 @@ const updatePost = (postTitle, post, postContent, username) => {
 };
 
 //inumerate the number of likes and append the user
-const likePost = (postTitle, like_user, post, postContent) => {
+const likePost = (postTitle, like_user, postContent) => {
   return new Promise((resolve, reject) => {
     fsReadfileP(FILE_NAME)
       .then((data) => checkUser(data, like_user))
-      .then(() => resolve(updatePost(postTitle, post, postContent, like_user)))
+      .then(() => resolve(updatePost(postTitle, postContent, like_user)))
       .catch(() => reject(err));
   });
 };
@@ -191,7 +192,7 @@ fsReadfileP(FILE_NAME)
     console.log("Post have been created");
   })
   .then(() => {
-    likePost(title, like_user, like_counter, content);
+    likePost(title, like_user, content);
     console.log("Post updated")
   })
   .catch((err) => console.log(err.message));
